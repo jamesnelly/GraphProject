@@ -6,9 +6,7 @@ def shunt(infix):
     pofix = ""
     # Operator stack
     stack = ""
-
     for c in infix:
-       # print("c: ", c, " stack: ", stack, "  postfix: ", pofix)
         if c == '(':
             stack = stack + c
         elif c == ')':
@@ -21,13 +19,14 @@ def shunt(infix):
             stack = stack + c
         else:
             pofix = pofix + c
-
     while stack:
         pofix, stack = pofix + stack[-1], stack[:-1]
-
     return pofix
 
 print(shunt("(a.b)|(c*.d)"))
+print(shunt("(a|b).(a*|b*)"))
+print(shunt("(a|b).(a*|b)"))
+
 # Represents a state with two arrows, labelled by a label
 # Use None for a label representing "e" arrows.
 class  state: 
@@ -118,7 +117,6 @@ def followes(state):
         if state.edge2 is not None:
             # If there's an edge2, follow it.
             states |= followes(state.edge2)
-
     # Return the set of states
     return states
 
