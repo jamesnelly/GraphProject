@@ -1,3 +1,5 @@
+# James Nelly   G00346996
+# =========================
 def shunt(infix):
     # Special characters for regular expressions and their precedence
     # this setups there precedence value
@@ -44,11 +46,14 @@ class nfa:
     initial = None
     accept = None
 
+    # Constructor function
+    # Constructor is inside class nfa
     def __init__(self, initial, accept):
         self.initial = initial
         self.accept = accept
 
 def compile(pofix):
+    # Instances of the NFA class
     nfastack = []
 
     for c in pofix:
@@ -153,12 +158,11 @@ def match(infix, string):
     # Check if the accept state is in the set of current states.
     return (nfa.accept in current)
 
-# some tests.
+# testing our our infix expression's
 infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*", "a.(b.b)*.c"]
 strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
 
 for i in infixes:
     for s in strings:
         print(match(i, s), i, s)
-# nfastack should only have a single nfa on it at this point.
-#print(compile("ab.cd.|"))
+
