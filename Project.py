@@ -1,5 +1,6 @@
 def shunt(infix):
     # Special characters for regular expressions and their precedence
+    # this setups there precedence value
     specials = {'*': 50, '.': 40, '|': 30}
 
     # Will eventually be the output stack
@@ -7,22 +8,27 @@ def shunt(infix):
     # Operator stack
     stack = ""
     for c in infix:
+        # push the open bracket too the stack
         if c == '(':
             stack = stack + c
+            # look at the charchers on the stack and start taking them off
         elif c == ')':
             while stack[-1] != '(':
                 pofix, stack = pofix + stack[-1], stack[:-1]
             stack = stack[:-1]
+            # want to take was ever is on the stack and put it into
+            # the pofix regular expression
         elif c in specials:
             while stack and specials.get(c, 0) <= specials.get(stack[-1], 0):
                 pofix, stack = pofix + stack[-1], stack[:-1]
             stack = stack + c
+            # Deals with normal characters in our regular expression
         else:
             pofix = pofix + c
     while stack:
         pofix, stack = pofix + stack[-1], stack[:-1]
     return pofix
-
+# infix regular expression that will be converted to postfix regular expression
 print(shunt("(a.b)|(c*.d)"))
 print(shunt("(a|b).(a*|b*)"))
 print(shunt("(a|b).(a*|b)"))
